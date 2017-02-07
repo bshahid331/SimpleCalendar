@@ -16,7 +16,7 @@ var db = require('./config/db');
 var port = 3000; 
 
 // connect to  mongoDB  
-mongoose.connect(db.url);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/Calendar');
 
 app.use(cors());
 
