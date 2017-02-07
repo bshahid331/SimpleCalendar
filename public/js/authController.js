@@ -111,10 +111,10 @@ app.controller('authController', function($scope,$http,$location) {
          var event = {title: $scope.myTitle, startDate: new Date($scope.myDate.getFullYear(), $scope.myDate.getMonth(), $scope.myDate.getDate()), img: $scope.previewImage, createdBy: $scope.loggeduser.username};
            $http.post('/events/add', event).
             success(function(data) {
-                 alert("SUCCESS");
+                 
              }).
             error(function() {
-                alert("ERROR");
+                alert("Someting went wrong");
             });
     };
 
