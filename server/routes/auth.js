@@ -20,7 +20,7 @@ module.exports = function(app) {
 
     app.use(session({
         store: new MongoStore({
-            url: 'mongodb://localhost/Calendar'
+            url: process.env.MONGODB_URI || 'mongodb://localhost/Calendar'
          }),
         secret: 'codetutorialsecret',
         resave:true,
