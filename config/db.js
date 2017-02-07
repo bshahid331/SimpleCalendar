@@ -1,3 +1,3 @@
 module.exports = {
-    url : MONGOLAB_URI
+    url : process.env.MONGOLAB_URI || 'mongodb://localhost/Calendar'
 }
