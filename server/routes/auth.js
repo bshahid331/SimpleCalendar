@@ -60,7 +60,7 @@ module.exports = function(app) {
     passport.use(new FacebookStrategy({
             clientID: '658015424378361',
             clientSecret: '9190d43b83f5e475af2619fa069e320c',
-            callbackURL: "http://localhost:3000/auth/facebook/callback",
+            callbackURL: "https://gratifycalendar.herokuapp.com/auth/facebook/callback",
             profileFields: ['id', 'emails', 'name']
         },function(accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
