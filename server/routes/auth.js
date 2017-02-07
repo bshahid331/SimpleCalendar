@@ -12,12 +12,15 @@ module.exports = function(app) {
     var user = require('../models/usermodel.js');
     var User = mongoose.model('User');
 
+    var event = require('../models/eventmodel.js');
+    var Event = mongoose.model('Event');
+
     var session = require('express-session');
     var MongoStore = require('connect-mongo')(session);
 
     app.use(session({
         store: new MongoStore({
-            url: 'mongodb://localhost/test'
+            url: 'mongodb://localhost/Calendar'
          }),
         secret: 'codetutorialsecret',
         resave:true,
@@ -31,18 +34,22 @@ module.exports = function(app) {
 
     passport.use(new LocalStrategy(
         function (username, password, done) {
-
+            
             User.findOne({username: username}, function (err, user) {
-
+              
                 if (err) {
+                    
                     return done(err);
                 }
                 if (!user) {
+                    
                     return done(null, false, {alert: 'Incorrect username.'});
                 }
                 if (user.password != password) {
+                   
                     return done(null, false, {alert: 'Incorrect password.'});
                 }
+                
                 return done(null, user);
             });
         }
@@ -51,13 +58,14 @@ module.exports = function(app) {
 
 
     passport.use(new FacebookStrategy({
-            clientID: '1598215213755624',
-            clientSecret: 'c019a55f66e96fbb30d1dc882e64406a',
-            callbackURL: "http://localhost:3000/auth/facebook/callback"
+            clientID: '658015424378361',
+            clientSecret: '9190d43b83f5e475af2619fa069e320c',
+            callbackURL: "http://localhost:3000/auth/facebook/callback",
+            profileFields: ['id', 'emails', 'name']
         },function(accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
                 User.findOne({'email': profile.emails[0].value}, function (err, user) {
-                    console.log(profile);
+                    
                     if (err) return done(err);
                     if (user) {
                         done(null, user);
@@ -134,10 +142,39 @@ module.exports = function(app) {
         });
     });
 
+    /** EVENT CODE **/
+    app.post('/events/add', function(req,res) {
+        var e = new Event();
+        e.title = req.body.title;
+        e.startDate = req.body.startDate;
+        e.img = req.body.img;
+        e.createdBy = req.body.createdBy;
+
+        e.save(function(err) {
+            if(err) {
+                res.json({'alert': 'Adding Event Failed'});
+            } else {
+                res.json({'alert': 'Adding Event Success'});
+            }
+        });
+    });
+
+    app.get('/events', function(req,res) {
+        var username = req.user.username;
+        Event.find({createdBy: username}, function(err, events) {
+            if(err) {
+                res.json({'alert': 'Adding Event Failed'});       
+            } else {
+                res.json({'events': events});
+            }
+        });
+    });
+
+
+
      app.get('/auth/logout', function(req, res){
-         console.log('logout');
         req.logout();
-        res.send(200);
+        res.sendStatus(200);
      });
 
 };

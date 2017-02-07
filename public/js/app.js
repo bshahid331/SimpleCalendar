@@ -1,4 +1,4 @@
-var app= angular.module('myApp', ['ngRoute'])
+var app= angular.module('myApp', ['ngRoute', 'ui.calendar', 'ui.date', 'ui.bootstrap', 'bootstrap.fileField'])
 
 .config(['$routeProvider',
     function($routeProvider) {
@@ -16,6 +16,8 @@ var app= angular.module('myApp', ['ngRoute'])
                 controller: 'authController'
             }).
             otherwise({
-                redirectTo: '/signin'
+                redirectTo: function(params, currentPath) {
+                return '/signin';
+            }
             });
     }]);

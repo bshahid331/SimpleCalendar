@@ -21,7 +21,7 @@ mongoose.connect(db.url);
 app.use(cors());
 
 // parse application/json 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json({limit: '50mb'})); 
 
 
 // parse application/x-www-form-urlencoded

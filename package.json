@@ -11,7 +11,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
     "method-override": "^2.3.2",
-    "mongoose": "^3.8.25",
+    "mongoose": "^4.4.10",
     "passport": "^0.2.1",
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0"
