@@ -60,7 +60,7 @@ module.exports = function(app) {
     passport.use(new FacebookStrategy({
             clientID: '658015424378361',
             clientSecret: '9190d43b83f5e475af2619fa069e320c',
-            callbackURL: "https://gratifycalendar.herokuapp.com/auth/facebook/callback",
+            callbackURL: "https://gratifycalendar.herokuapp.com/auth/callback",
             profileFields: ['id', 'emails', 'name']
         },function(accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
@@ -106,9 +106,9 @@ module.exports = function(app) {
          res.redirect('/');
     }
 
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope:'email'}));
+    app.get('/auth/fblogin', passport.authenticate('facebook', {scope:'email'}));
 
-    app.get('/auth/facebook/callback',
+    app.get('/auth/callback',
         passport.authenticate('facebook', { failureRedirect: '/login.html' }),
         function(req, res) {
             res.redirect('/#/user');
